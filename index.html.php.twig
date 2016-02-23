@@ -1,0 +1,54 @@
+<?php $view->extend('::base.html.php') ?>
+<?php $view['slots']->set('title', '{{ entity }}s') ?>
+<?php $view['slots']->set('description', 'Lista de {{ entity }}s registrados en el sistema.') ?>
+
+{% block body %}
+<?php $view['slots']->start('body'); ?>
+    <h1 class="page-header">Lista de {{ entity }}s 
+      <a href="{{"<?php echo $view['router']->path('" ~ route_name_prefix ~ "_index'); ?>"}}">
+      <img src="<?php echo $view['assets']->getUrl('images/new.png') ?>" class="img-responsive img-circle pull-right" style="width: 40px;">
+      </a>
+    </h1>
+
+    <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        {{ "<?php " }}
+          {{ "foreach ($campos as $campo):" }}
+            {{" echo '<th>'.$headers[$campo].'</th>'; "}}
+          {{ "endforeach;" }}
+        {{ "?>" }}
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach (${{"" ~ entity_pluralized ~ " as $" ~ entity_singularized ~ ""}}): ?>
+      <tr>
+        <td></td>
+      <?php 
+        $a = "get"; 
+        $c = $a.$campos[0];
+        {{"echo \"<td><a href=\\\"\"\.$view['router']->path('" ~ route_name_prefix ~ "_show',array('id' =>  $" ~ entity_singularized ~ "->getId()))\.\"\\\" target=\\\"_blank\\\">\"\.$" ~ entity_singularized ~ "->$c() \.\"</a></td>\"; "}}
+        for ($i=1; $i < count($campos) ; $i++) {
+          $c = $a.$campos[$i];
+          {{"echo \"<td>\"\. $" ~ entity_singularized ~ "->$c()\.\"</td>\"; "}}
+        }
+      ?>
+        <td>
+          <ul class="list-inline">
+            <li>
+              <a href="{{ "<?php echo $view['router']->path('" ~ route_name_prefix ~ "_edit',array('id' =>  $" ~ entity_singularized ~ "->getId())); ?>" }}">
+              <img src="<?php echo $view['assets']->getUrl('images/edit.png') ?>" class="img-responsive img-circle pull-right" style="width: 40px;">
+              </a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+    </table>
+</div>
+<?php $view['slots']->stop()?>
+{% endblock body %}

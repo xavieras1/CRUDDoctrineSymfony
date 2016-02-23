@@ -1,0 +1,20 @@
+<?php $view->extend('::base.html.php') ?>
+<?php $view['slots']->set('title', 'Crear {{ entity }}') ?>
+<?php $view['slots']->set('description', 'Formulario para ingreso de {{ entity }}.') ?>
+
+{% block body %}
+<?php $view['slots']->start('body') ?>
+
+	<h1 class="page-header">
+    	<a href="{{ "<?php echo $view['router']->path('" ~ route_name_prefix ~ "_index'); ?>" }}">
+    		<img src="<?php echo $view['assets']->getUrl('images/back.png') ?>" class="img-responsive img-circle pull-left" style="width: 40px;">
+  		</a>Formulario de Creación de {{ entity }}
+  	</h1>
+
+    <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->widget($form) ?>
+        <input type="submit" value="Guardar" />
+    <?php echo $view['form']->end($form) ?>
+
+<?php $view['slots']->stop() ?>
+{% endblock body %}

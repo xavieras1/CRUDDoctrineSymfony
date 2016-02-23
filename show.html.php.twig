@@ -1,0 +1,55 @@
+<?php $view->extend('::base.html.php') ?>
+<?php $view['slots']->set('title', 'Información de {{ entity }}') ?>
+<?php $view['slots']->set('description', 'Toda la información correspondiente a {{ entity }}') ?>
+
+{% block body %}
+{{ "<?php $view['slots']->start('body'); ?>" }}
+    <h1 class="page-header">
+        <a href="{{ "<?php echo $view['router']->path('" ~ route_name_prefix ~ "_index'); ?>" }}">
+            <img src="<?php echo $view['assets']->getUrl('images/back.png') ?>" class="img-responsive img-circle pull-left" style="width: 40px;">
+        </a>Información de {{ entity }}
+    </h1>
+
+    <table>
+        <tbody>
+        {%- for field, metadata in fields %}
+
+            <tr>
+                <th>{{ field|capitalize }}</th>
+            {% set primera = field|first|upper %}
+
+            {%- if metadata.type in ['datetime'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['date'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['time'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['array'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+            {%- elseif metadata.type in ['boolean'] %}
+
+                <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+            {%- else %}
+
+                <td>{{ '<?php echo $' ~ entity_singularized ~ '->get' ~ primera ~ field|replace({'_': ''})[1:] ~ '(); ?>' }}</td>
+
+            {%- endif %}
+
+            </tr>
+
+        {%- endfor %}
+
+        </tbody>
+    </table>
+
+{{ "<?php $view['slots']->stop()?>" }}
+{% endblock body %}

@@ -1,0 +1,21 @@
+<?php $view->extend('::base.html.php'); ?>
+<?php $view['slots']->set('title', 'Editar {{ entity }}'); ?>
+<?php $view['slots']->set('description', 'Formulario de Edición de {{ entity }}.'); ?>
+
+{% block body %}
+<?php $view['slots']->start('body'); ?>
+
+    <h1 class="page-header">
+    	<a href="{{ "<?php echo $view['router']->path('" ~ route_name_prefix ~ "_index'); ?>" }}">
+    		<img src="<?php echo $view['assets']->getUrl('images/back.png') ?>" class="img-responsive img-circle pull-left" style="width: 40px;">
+  		</a>Editar {{ entity }}
+  	</h1>
+
+    <?php echo $view['form']->start($edit_form) ?>
+        <?php echo $view['form']->widget($edit_form) ?>
+        <input type="submit" value="Editar" />
+    <?php echo $view['form']->end($edit_form) ?>
+
+
+<?php $view['slots']->stop() ?>
+{% endblock body %}
