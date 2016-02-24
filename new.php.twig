@@ -38,6 +38,7 @@
         return $this->render('{{ entity|lower|replace({'\\': '/'}) }}/new.html.php', array(
             '{{ entity_singularized }}' => ${{ entity_singularized }},
             'form' => $form->createView(),
+            'user' => $this->getUser(),
         ));
 {% endblock method_return %}
     }

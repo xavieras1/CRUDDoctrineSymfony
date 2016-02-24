@@ -5,7 +5,7 @@
 {% block body %}
 <?php $view['slots']->start('body'); ?>
     <h1 class="page-header">Lista de {{ entity }}s 
-      <a href="{{"<?php echo $view['router']->path('" ~ route_name_prefix ~ "_index'); ?>"}}">
+      <a href="{{"<?php echo $view['router']->path('" ~ route_name_prefix ~ "_new'); ?>"}}">
       <img src="<?php echo $view['assets']->getUrl('images/new.png') ?>" class="img-responsive img-circle pull-right" style="width: 40px;">
       </a>
     </h1>

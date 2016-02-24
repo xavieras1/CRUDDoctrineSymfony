@@ -34,6 +34,7 @@
             '{{ entity_singularized }}' => ${{ entity_singularized }},
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'user' => $this->getUser(),
         ));
 {% endblock method_return %}
     }

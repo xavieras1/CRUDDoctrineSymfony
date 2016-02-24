@@ -29,6 +29,9 @@
 {% block method_return %}
         return $this->render('{{ entity|lower|replace({'\\': '/'}) }}/index.html.php', array(
             '{{ entity_pluralized }}' => ${{ entity_pluralized }},
+            'campos' => $campos,
+            'headers' => $headers,
+            'user' => $this->getUser(),
         ));
 {% endblock method_return %}
     }

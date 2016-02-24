@@ -27,6 +27,7 @@
 {% if 'delete' in actions %}
             'delete_form' => $deleteForm->createView(),
 {% endif %}
+            'user' => $this->getUser(),
         ));
 {% endblock method_return %}
     }
